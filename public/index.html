@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر أبو تريكة | ملابس وأدوات رياضية</title>
+    <!-- Google Fonts: Cairo & Orbitron for Sporty Futuristic feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="styles.css?v=1.0.5">
+</head>
+<body>
+    <!-- Offline/Hybrid mode notice banner -->
+    <div id="connection-banner" class="connection-banner offline">
+        <i class="fa-solid fa-cloud-bolt"></i>
+        <span>يعمل الآن بالوضع المحلي الآمن (بياناتك محفوظة في المتصفح).</span>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Header / Navigation Bar -->
+        <header class="app-header">
+            <button class="nav-toggle" id="navToggleBtn" aria-label="القائمة">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <div class="logo-area">
+                <img id="header-logo" src="assets/logo.png" alt="شعار متجر أبو تريكة" class="store-logo-img">
+                <div class="brand-info">
+                    <h1 class="store-name">أبو تريكة <span class="neon-text">STORE</span></h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn notifications-btn" id="notifBtn" aria-label="التنبيهات">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge" id="notifBadge">3</span>
+                </button>
+                <button class="action-btn admin-login-btn" id="adminLoginToggleBtn" title="لوحة التحكم للمسؤول">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span class="admin-status-text" id="adminStatusText">دخول المسؤول</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+
+            <!-- Store Profile Card (Hero Banner) -->
+            <section class="store-profile-card">
+                <div class="profile-glow"></div>
+                <div class="profile-header">
+                    <div class="profile-logo-wrapper">
+                        <img id="profile-logo" src="assets/logo.png" alt="أبو تريكة ستور" class="profile-logo-img">
+                        <span class="active-badge"></span>
+                    </div>
+                    <div class="profile-meta">
+                        <h2 class="profile-title">محل أبو تريكة الرياضي</h2>
+                        <span class="profile-tag">ملابس وأدوات رياضية</span>
+                        <p class="profile-desc">نقدم أحدث وأجود الملابس الرياضية والمعدات بأسيوط، أبو تيج، تحت إدارة مصطفى متولي.</p>
+                        
+                        <div class="profile-features">
+                            <span class="feature-tag"><i class="fa-solid fa-circle-check neon-icon"></i> ضمان جودة</span>
+                            <span class="feature-tag"><i class="fa-solid fa-truck-fast orange-icon"></i> توصيل متاح</span>
+                            <span class="feature-tag"><i class="fa-solid fa-star blue-icon"></i> خدمة ممتازة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button class="btn btn-primary" id="addNewProductHeaderBtn">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        إضافة منتج جديد
+                    </button>
+                    <button class="btn btn-secondary" id="contactWhatsAppBtn">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        تواصل وواتساب
+                    </button>
+                </div>
+            </section>
+
+            <!-- Dashboard Statistics Section (KPIs) -->
+            <section class="dashboard-kpis">
+                <!-- KPI 1: Sales -->
+                <div class="kpi-card kpi-sales">
+                    <div class="kpi-icon"><i class="fa-solid fa-coins"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">إجمالي المبيعات</span>
+                        <h3 class="kpi-value" id="kpiSalesVal">0.00 ج.م</h3>
+                        <span class="kpi-sub green"><i class="fa-solid fa-arrow-trend-up"></i> +12.8% هذا الأسبوع</span>
+                    </div>
+                </div>
+                <!-- KPI 2: Stock -->
+                <div class="kpi-card kpi-stock">
+                    <div class="kpi-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">المخزون الحالي</span>
+                        <h3 class="kpi-value" id="kpiStockVal">0</h3>
+                        <span class="kpi-sub orange" id="kpiStockSub">0 وحدة متوفرة</span>
+                    </div>
+                </div>
+                <!-- KPI 3: Orders -->
+                <div class="kpi-card kpi-orders">
+                    <div class="kpi-icon"><i class="fa-solid fa-receipt"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">طلبات الحجز</span>
+                        <h3 class="kpi-value" id="kpiOrdersVal">0</h3>
+                        <span class="kpi-sub blue" id="kpiOrdersSub">0 طلب قيد التجهيز</span>
+                    </div>
+                </div>
+                <!-- KPI 4: Offers -->
+                <div class="kpi-card kpi-offers">
+                    <div class="kpi-icon"><i class="fa-solid fa-percent"></i></div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">العروض والخصومات</span>
+                        <h3 class="kpi-value" id="kpiOffersVal">0</h3>
+                        <span class="kpi-sub pink">خصومات حصرية نشطة</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Department Categories Filter Bar -->
+            <section class="departments-filter">
+                <div class="section-header">
+                    <h3 class="section-title"><i class="fa-solid fa-tags neon-text"></i> تصفح حسب القسم</h3>
+                    <button class="view-all-btn" id="clearCategoryFilterBtn">عرض الكل <i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+                <div class="categories-scroll-wrapper">
+                    <!-- Category Item: Men -->
+                    <button class="category-item active" data-category="all">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-border-all"></i></div>
+                        <span class="cat-name">الكل</span>
+                    </button>
+                    <button class="category-item" data-category="رجالي">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-person"></i></div>
+                        <span class="cat-name">رجالي</span>
+                    </button>
+                    <!-- Category Item: Women -->
+                    <button class="category-item" data-category="حريمي">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-person-dress"></i></div>
+                        <span class="cat-name">حريمي</span>
+                    </button>
+                    <!-- Category Item: Kids -->
+                    <button class="category-item" data-category="أطفال">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-child"></i></div>
+                        <span class="cat-name">أطفال</span>
+                    </button>
+                    <!-- Category Item: Shoes -->
+                    <button class="category-item" data-category="أحذية">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-shoe-prints"></i></div>
+                        <span class="cat-name">أحذية</span>
+                    </button>
+                    <!-- Category Item: Accessories -->
+                    <button class="category-item" data-category="إكسسوارات">
+                        <div class="cat-icon-ring"><i class="fa-solid fa-dumbbell"></i></div>
+                        <span class="cat-name">إكسسوارات</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Products Showcase Section -->
+            <section class="products-section">
+                
+                <div class="products-header">
+                    <div class="products-title-wrapper">
+                        <h2 class="section-headline">إدارة المنتجات الذكية</h2>
+                        <span class="products-count-badge" id="productsCountBadge">متوفر 0 منتج</span>
+                    </div>
+                    
+                    <div class="products-action-bar">
+                        <!-- Smart 3D Photo Studio Button -->
+                        <button class="studio-3d-btn" id="open3DStudioBtn">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>تحويل الصور لـ 3D</span>
+                            <span class="sparkle-pulse"></span>
+                        </button>
+                        
+                        <!-- Search & Filter Controls -->
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="productSearchInput" placeholder="ابحث باسم المنتج، اللون، أو القسم...">
+                        </div>
+                        <button class="filter-options-btn" id="toggleFiltersBtn" title="خيارات التصفية المتقدمة">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters Panel (Collapsible) -->
+                <div class="advanced-filters-panel" id="advancedFiltersPanel">
+                    <div class="filter-group">
+                        <label>حالة التوفر:</label>
+                        <select id="filterAvailability">
+                            <option value="all">الكل</option>
+                            <option value="in_stock">المتوفر فقط</option>
+                            <option value="out_of_stock">غير المتوفر</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الخصومات:</label>
+                        <select id="filterDiscount">
+                            <option value="all">الكل</option>
+                            <option value="discounted">المنتجات المخفضة فقط</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>ترتيب حسب:</label>
+                        <select id="filterSort">
+                            <option value="newest">الأحدث أولاً</option>
+                            <option value="price_asc">السعر: من الأقل للأعلى</option>
+                            <option value="price_desc">السعر: من الأعلى للأقل</option>
+                            <option value="popular">الأكثر مبيعاً</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Active Filter Tags Display -->
+                <div class="active-filter-tags" id="activeFilterTags"></div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be dynamically populated by JS here -->
+                    <div class="loading-spinner-wrapper">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل منتجات متجر أبو تريكة...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Admin Workspace (Admin Dashboard Mode) - Hidden by default -->
+        <section class="admin-dashboard-section" id="adminDashboardSection">
+            <div class="admin-dashboard-header">
+                <h2 class="admin-headline"><i class="fa-solid fa-screwdriver-wrench neon-text"></i> لوحة الإشراف المتكاملة</h2>
+                <div class="admin-header-actions">
+                    <button class="btn btn-sm btn-secondary" id="adminSettingsBtn"><i class="fa-solid fa-gears"></i> إعدادات المتجر</button>
+                    <button class="btn btn-sm btn-warning" id="adminDashPasswordBtn"><i class="fa-solid fa-key"></i> تغيير كلمة المرور</button>
+                    <button class="btn btn-sm btn-danger" id="adminLogoutBtn"><i class="fa-solid fa-sign-out-alt"></i> تسجيل الخروج</button>
+                </div>
+            </div>
+
+            <!-- Admin Navigation Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="products-mgmt"><i class="fa-solid fa-boxes-packing"></i> إدارة المخزون</button>
+                <button class="admin-tab" data-tab="orders-mgmt"><i class="fa-solid fa-truck-ramp-box"></i> إدارة الطلبات المستلمة (<span id="pendingOrdersCount">0</span>)</button>
+                <button class="admin-tab" data-tab="add-product" id="addProductTabBtn"><i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد</button>
+                <button class="admin-tab" data-tab="change-password-dash"><i class="fa-solid fa-key"></i> تغيير كلمة المرور</button>
+            </div>
+
+            <!-- Tab Content 1: Products Management -->
+            <div class="admin-tab-content active" id="products-mgmt-tab">
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>المنتج</th>
+                                <th>القسم</th>
+                                <th>السعر الأصلي</th>
+                                <th>سعر الخصم</th>
+                                <th>المخزون المتوفر</th>
+                                <th>الكمية المباعة</th>
+                                <th>عرض 3D</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProductsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Content 2: Orders Management -->
+            <div class="admin-tab-content" id="orders-mgmt-tab">
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>اسم العميل</th>
+                                <th>رقم الهاتف</th>
+                                <th>العنوان بالتفصيل</th>
+                                <th>المنتج المطلوب</th>
+                                <th>المواصفات المختارة</th>
+                                <th>السعر الإجمالي</th>
+                                <th>تاريخ الحجز</th>
+                                <th>حالة الطلب</th>
+                                <th>العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Content 3: Add New Product Form -->
+            <div class="admin-tab-content" id="add-product-tab">
+                <form id="addProductForm" class="admin-form" enctype="multipart/form-data">
+                    <input type="hidden" id="editProductId" value="">
+                    
+                    <h3 class="form-title" id="formActionTitle">إضافة منتج رياضي جديد للمتجر</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pName">اسم المنتج *</label>
+                            <input type="text" id="pName" placeholder="مثال: حذاء ألترا رانر V2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pCategory">القسم الرياضي *</label>
+                            <select id="pCategory" required>
+                                <option value="رجالي">رجالي</option>
+                                <option value="حريمي">حريمي</option>
+                                <option value="أطفال">أطفال</option>
+                                <option value="أحذية">أحذية</option>
+                                <option value="إكسسوارات">إكسسوارات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pPrice">السعر الأصلي (ج.م) *</label>
+                            <input type="number" step="0.01" id="pPrice" placeholder="مثال: 450" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pDiscountPrice">سعر الخصم (ج.م) - اختياري</label>
+                            <input type="number" step="0.01" id="pDiscountPrice" placeholder="اتركه فارغاً في حال عدم وجود خصم">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pSizes">المقاسات المتوفرة (افصل بينها بفاصلة) *</label>
+                            <input type="text" id="pSizes" placeholder="مثال للأحذية: 41,42,43,44 أو للملابس: S,M,L,XL" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pColors">الألوان المتوفرة (افصل بينها بفاصلة) *</label>
+                            <input type="text" id="pColors" placeholder="مثال: أسود,فسفوري,أبيض داكن" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pQuantity">الكمية المتاحة في المخزن *</label>
+                            <input type="number" id="pQuantity" placeholder="مثال: 150" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="pIs3d" checked>
+                                <span class="slider-toggle"></span>
+                            </label>
+                            <span class="toggle-label">تفعيل ميزة العرض التفاعلي ثلاثي الأبعاد (3D Perspective Card)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pImage">صورة المنتج الرياضي *</label>
+                        <div class="image-upload-wrapper">
+                            <div class="upload-dropzone" id="imageDropzone">
+                                <i class="fa-solid fa-camera-retro upload-icon" style="font-size: 36px; color: var(--neon-green);"></i>
+                                <p style="font-weight: 700; font-size: 15px; margin: 5px 0; color: var(--text-white);">اسحب الصورة هنا أو اضغط للاختيار من جهازك</p>
+                                <button type="button" class="btn btn-primary btn-sm" style="pointer-events: none; margin-top: 5px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> رفع صورة من المعرض</button>
+                                <span class="file-info" id="fileInfoText" style="margin-top: 5px;">أقصى حجم للملف: 5 ميجابايت (JPG, PNG)</span>
+                                <input type="file" id="pImage" accept="image/*">
+                            </div>
+                            <div class="image-preview-container" id="imagePreviewContainer">
+                                <img id="productImagePreview" src="" alt="معاينة الصورة" class="image-preview">
+                                <button type="button" class="remove-preview-btn" id="removePreviewBtn"><i class="fa-solid fa-times"></i></button>
+                            </div>
+                        </div>
+                        <input type="text" id="pImageUrl" placeholder="أو أدخل رابط صورة مباشر (اختياري في حال لم تقم برفع ملف)">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveProductBtn">حفظ ونشر المنتج في المتجر</button>
+                        <button type="button" class="btn btn-secondary" id="cancelEditBtn">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tab Content 4: Change Password Tab -->
+            <div class="admin-tab-content" id="change-password-dash-tab">
+                <form id="dashChangePasswordForm" class="admin-form">
+                    <h3 class="form-title text-orange"><i class="fa-solid fa-key neon-text"></i> تغيير الرقم السري للمسؤول</h3>
+                    <p class="form-subtitle" style="margin-bottom: 24px; color: var(--text-gray); font-size: 14px;">تأمين لوحة التحكم الذكية وتحديث كلمة المرور لمدير النظام (مصطفى متولي)</p>
+                    
+                    <div class="form-group">
+                        <label for="dashCurrPassword">كلمة المرور الحالية للمسؤول: *</label>
+                        <input type="password" id="dashCurrPassword" placeholder="أدخل كلمة المرور الحالية هنا..." required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dashNewPassword">كلمة المرور الجديدة: *</label>
+                            <input type="password" id="dashNewPassword" placeholder="أدخل كلمة المرور الجديدة..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dashConfirmNewPassword">تأكيد كلمة المرور الجديدة: *</label>
+                            <input type="password" id="dashConfirmNewPassword" placeholder="تأكيد كلمة المرور الجديدة..." required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveDashPasswordBtn">تحديث كلمة المرور السرية</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation Bar (Mobile Native Look) -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" id="btnNavHome">
+                <i class="fa-solid fa-house"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-item" id="btnNavInventory">
+                <i class="fa-solid fa-warehouse"></i>
+                <span>المخزون</span>
+            </button>
+            <button class="nav-item" id="btnNavOffers">
+                <i class="fa-solid fa-tags"></i>
+                <span>العروض</span>
+                <span class="badge" id="navOffersBadge">0</span>
+            </button>
+            <button class="nav-item" id="btnNavContact">
+                <i class="fa-solid fa-comments"></i>
+                <span>تواصل معنا</span>
+            </button>
+        </nav>
+
+        <!-- Floating Add Product Button for Admin (FAB) -->
+        <button class="fab-btn" id="fabAddBtn" title="إضافة منتج سريع">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- ==================== DIALOGS & MODALS ==================== -->
+
+    <!-- 1. Admin Settings & Password Change Modal -->
+    <div class="modal-overlay" id="adminSettingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-gears neon-text"></i> إعدادات متجر أبو تريكة</h3>
+                <button class="modal-close-btn" id="closeSettingsModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Store Info Settings -->
+                <form id="storeSettingsForm" class="modal-form">
+                    <h4 class="form-section-subtitle">تعديل معلومات وتواصل المحل</h4>
+                    <div class="form-group">
+                        <label for="setStoreName">اسم المحل الرسمي:</label>
+                        <input type="text" id="setStoreName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="setWhatsApp">رقم هاتف الواتساب للمبيعات (مع كود الدولة):</label>
+                        <input type="text" id="setWhatsApp" placeholder="مثال: 01120696554" required>
+                        <small class="help-text">الرقم الذي سيتم إرسال رسائل حجز المنتجات وتفاصيل العملاء إليه تلقائياً.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="setAddress">عنوان المحل بالتفصيل:</label>
+                        <input type="text" id="setAddress" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">حفظ الإعدادات والمعلومات</button>
+                </form>
+
+                <hr class="modal-divider">
+
+                <!-- Admin Password Change Settings -->
+                <form id="changePasswordForm" class="modal-form">
+                    <h4 class="form-section-subtitle text-orange">تغيير الرقم السري للإدارة</h4>
+                    <div class="form-group">
+                        <label for="currPassword">كلمة المرور الحالية للمسؤول (مصطفى متولي):</label>
+                        <input type="password" id="currPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">كلمة المرور الجديدة:</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmNewPassword">تأكيد كلمة المرور الجديدة:</label>
+                        <input type="password" id="confirmNewPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-block">تحديث كلمة المرور</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Admin Login Modal -->
+    <div class="modal-overlay" id="adminLoginModal">
+        <div class="modal-card modal-sm">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-shield-halved neon-text"></i> مصادقة المسؤول</h3>
+                <button class="modal-close-btn" id="closeLoginModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-login-avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4 class="login-greeting">مرحباً بك مصطفى متولي</h4>
+                <p class="login-prompt">الرجاء إدخال كلمة المرور السرية لفتح لوحة التحكم الذكية وإدارة المخازن والطلبات.</p>
+                
+                <!-- Main Login Form -->
+                <form id="adminLoginForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="adminPasswordInput">كلمة المرور السرية:</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="adminPasswordInput" placeholder="أدخل الرقم السري هنا..." required>
+                            <button type="button" class="toggle-password-btn" id="togglePassVisibilityBtn"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px; direction: rtl;">
+                            <small class="help-text">الرقم السري الافتراضي للمرة الأولى هو 123456</small>
+                            <button type="button" class="btn btn-sm btn-warning" id="forgotPasswordBtn" style="width: 100%; margin-top: 5px; font-size: 13px;">
+                                <i class="fa-solid fa-key"></i> نسيت كلمة المرور؟ (استعادة كلمة المرور)
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">تأكيد وتسجيل الدخول</button>
+                </form>
+
+                <!-- Password Recovery Form (Hidden by default) -->
+                <form id="adminRecoveryForm" class="modal-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="adminRecoveryPhoneInput">رقم الواتساب المسجل للإدارة: *</label>
+                        <input type="text" id="adminRecoveryPhoneInput" placeholder="مثال: 01120696554" required>
+                        <small class="help-text">يجب مطابقة رقم الواتساب المسجل في إعدادات المتجر لاستعادة الحساب.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="recoveryNewPassword">كلمة المرور الجديدة: *</label>
+                        <input type="password" id="recoveryNewPassword" placeholder="أدخل كلمة المرور الجديدة..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recoveryConfirmNewPassword">تأكيد كلمة المرور الجديدة: *</label>
+                        <input type="password" id="recoveryConfirmNewPassword" placeholder="تأكيد كلمة المرور..." required>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1; font-size: 13px; padding: 10px 5px;">تحديث وتأكيد</button>
+                        <button type="button" class="btn btn-secondary" id="backToLoginBtn" style="padding: 10px; font-size: 13px;">رجوع</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Customer Booking (Order) Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-truck-ramp-box neon-text"></i> حجز وتوصيل سريع</h3>
+                <button class="modal-close-btn" id="closeOrderModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Selected Product Preview Card -->
+                <div class="selected-product-summary">
+                    <img id="orderProductImg" src="assets/placeholder_product.png" alt="المنتج المحدد" class="summary-product-img">
+                    <div class="summary-product-info">
+                        <h4 id="orderProductName" class="summary-product-title">اسم المنتج الرياضي</h4>
+                        <span id="orderProductCategory" class="summary-product-category">القسم الرياضي</span>
+                        <div class="summary-product-price-wrapper">
+                            <span id="orderProductPrice" class="summary-product-price">0.00 ج.م</span>
+                            <span id="orderProductOldPrice" class="summary-product-old-price">0.00 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Booking Details Form -->
+                <form id="customerBookingForm" class="modal-form">
+                    <input type="hidden" id="orderProductIdInput" value="">
+                    
+                    <div class="form-row">
+                        <!-- Select Color -->
+                        <div class="form-group">
+                            <label for="orderSelectColor">اختر اللون المتوفر: *</label>
+                            <select id="orderSelectColor" class="form-select" required>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <!-- Select Size -->
+                        <div class="form-group">
+                            <label for="orderSelectSize">اختر المقاس المتاح: *</label>
+                            <select id="orderSelectSize" class="form-select" required>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Select Quantity -->
+                        <div class="form-group">
+                            <label for="orderQuantity">الكمية المطلوبة: *</label>
+                            <div class="quantity-stepper">
+                                <button type="button" class="step-btn" id="qtyMinusBtn"><i class="fa-solid fa-minus"></i></button>
+                                <input type="number" id="orderQuantity" value="1" min="1" max="10" readonly>
+                                <button type="button" class="step-btn" id="qtyPlusBtn"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <!-- Display Total -->
+                        <div class="form-group total-price-display-wrapper">
+                            <span class="total-label">السعر الإجمالي للتوصيل:</span>
+                            <span id="orderTotalPriceDisplay" class="total-price-val">0.00 ج.م</span>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+                    <h4 class="form-section-subtitle"><i class="fa-solid fa-location-dot"></i> بيانات الشحن والتوصيل لعنوانك</h4>
+
+                    <div class="form-group">
+                        <label for="custName">اسم المشتري بالكامل: *</label>
+                        <input type="text" id="custName" placeholder="مثال: أحمد مصطفى علام" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="custPhone">رقم هاتف للتواصل (يفضل واتساب): *</label>
+                            <input type="tel" id="custPhone" placeholder="مثال: 01023456789" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="custAddress">عنوان التوصيل بالتفصيل: *</label>
+                            <input type="text" id="custAddress" value="أسيوط - أبو تيج - شارع بيوض" required>
+                        </div>
+                    </div>
+
+                    <div class="booking-notice">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>عند النقر على تأكيد الحجز، سيتم حفظ طلبك في قاعدة بيانات المحل وتوليد رسالة تفصيلية منسقة لتأكيد التوصيل الفوري مع الإدارة مباشرة عبر تطبيق الواتساب.</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBookingBtn">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        تأكيد الحجز والتوصيل الفوري بالواتساب
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3b. Product Details & Authenticity Modal (Premium Visual Showcase) -->
+    <div class="modal-overlay" id="productDetailsModal">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-circle-check neon-text"></i> تفاصيل وتأصيل المنتج الرياضي</h3>
+                <button class="modal-close-btn" id="closeDetailsModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="details-workspace">
+                    <!-- Left: Interactive Gallery with Microscopic Zoom -->
+                    <div class="details-gallery-panel">
+                        <div class="zoom-image-container" id="detailsZoomContainer">
+                            <img id="detailsActiveImg" src="assets/placeholder_product.png" alt="تفاصيل المنتج المكبرة" class="zoom-image">
+                            <div class="zoom-lens" id="detailsZoomLens"></div>
+                            <span class="zoom-hint-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> حرك الفأرة أو المس لتكبير النسيج والخيوط مجهرياً</span>
+                        </div>
+                        <!-- Thumbnail Carousel -->
+                        <div class="thumbnail-carousel" id="detailsThumbnails">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Product Specifications, Authenticity Certification and Actions -->
+                    <div class="details-info-panel">
+                        <div class="product-header-badge">
+                            <span id="detailsProductCategory" class="category-badge">القسم الرياضي</span>
+                            <span class="authenticity-verified-badge"><i class="fa-solid fa-shield-halved"></i> أصلي 100% (ضمان الجودة)</span>
+                        </div>
+                        
+                        <h2 id="detailsProductName" class="details-product-title">اسم المنتج الرياضي الفاخر</h2>
+                        
+                        <div class="details-price-area">
+                            <span id="detailsProductPrice" class="current-price">0.00 ج.م</span>
+                            <span id="detailsProductOldPrice" class="old-price">0.00 ج.م</span>
+                            <span id="detailsDiscountPercent" class="discount-badge">-0% خصم</span>
+                        </div>
+
+                        <!-- 100% Authenticity Premium Card -->
+                        <div class="authenticity-card">
+                            <div class="auth-card-glow"></div>
+                            <div class="auth-card-header">
+                                <i class="fa-solid fa-ribbon auth-icon"></i>
+                                <div>
+                                    <h4 class="auth-title">وثيقة الجودة وتأصيل المنشأ المعتمدة</h4>
+                                    <p class="auth-subtitle">منتج أصلي خاضع لمعايير المتجر الرياضي</p>
+                                </div>
+                            </div>
+                            
+                            <div class="auth-specs-grid">
+                                <div class="auth-spec-item">
+                                    <span class="spec-label"><i class="fa-solid fa-globe"></i> بلد المنشأ:</span>
+                                    <span id="authOrigin" class="spec-value">إيطاليا - جودة فاخرة</span>
+                                </div>
+                                <div class="auth-spec-item">
+                                    <span class="spec-label"><i class="fa-solid fa-shirt"></i> خامة النسيج:</span>
+                                    <span id="authFabric" class="spec-value">قطن 100% ألياف Dri-FIT معالجة</span>
+                                </div>
+                                <div class="auth-spec-item">
+                                    <span class="spec-label"><i class="fa-solid fa-award"></i> فترة الضمان:</span>
+                                    <span id="authWarranty" class="spec-value">ضمان 6 أشهر ضد عيوب الصناعة</span>
+                                </div>
+                                <div class="auth-spec-item">
+                                    <span class="spec-label"><i class="fa-solid fa-hashtag"></i> الرقم التسلسلي (SKU):</span>
+                                    <span id="authSerial" class="spec-value font-orbitron text-neon">ART-909283-IT</span>
+                                </div>
+                            </div>
+
+                            <!-- Holographic Barcode/Stamp -->
+                            <div class="auth-hologram-stamp">
+                                <div class="barcode-svg-wrapper">
+                                    <i class="fa-solid fa-barcode fa-2x text-neon" style="opacity: 0.85;"></i>
+                                    <span class="barcode-text" id="authBarcodeText">1234567890123</span>
+                                </div>
+                                <div class="gold-stamp">
+                                    <i class="fa-solid fa-certificate"></i>
+                                    <span>مضمون 100%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Available Stock Status -->
+                        <div class="stock-status-bar">
+                            <span class="stock-status-badge" id="detailsStockStatus"><i class="fa-solid fa-circle"></i> متوفر في المخزن</span>
+                        </div>
+
+                        <!-- Product Description Details -->
+                        <div class="product-specs-tabs">
+                            <h4 class="specs-section-title">المواصفات الفنية والتعليمات:</h4>
+                            <ul class="specs-list" id="detailsSpecsList">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="details-actions">
+                            <button class="btn btn-primary btn-block btn-lg" id="detailsBookBtn">
+                                <i class="fa-brands fa-whatsapp"></i>
+                                الانتقال للحجز الفوري والتوصيل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Smart 3D Photo Studio Scanner Modal (Adidas-Style) -->
+    <div class="modal-overlay" id="studio3DModal">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-wand-magic-sparkles neon-text"></i> استوديو معالجة وتحويل الصور لـ 3D الذكي</h3>
+                <button class="modal-close-btn" id="closeStudioModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="studio-workspace">
+                    <!-- Left: Studio Interactive Previewer -->
+                    <div class="studio-previewer-panel">
+                        <div class="studio-preview-box">
+                            <div class="scanner-laser" id="scannerLaser"></div>
+                            <div class="view-grid-3d"></div>
+                            
+                            <!-- 3D Object Render Wrapper -->
+                            <div class="object-3d-wrapper" id="object3DWrapper">
+                                <img id="studioActiveImg" src="assets/shoe_ultra_runner.png" alt="المنتج قيد المعالجة" class="object-3d-element">
+                                <div class="object-shadow-3d"></div>
+                            </div>
+                            
+                            <!-- Laser scan status overlay -->
+                            <div class="scan-status-overlay" id="scanStatusOverlay">
+                                <span class="status-badge" id="scanBadge"><i class="fa-solid fa-circle-notch fa-spin"></i> جاهز للمعالجة</span>
+                            </div>
+                        </div>
+
+                        <!-- 3D Rotation Controls Hint -->
+                        <div class="studio-controls-hint">
+                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                            <span>قم بتمرير مؤشر الماوس أو اللمس فوق المنتج لرؤية زوايا الـ 3D التفاعلية!</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Processor Options & Actions -->
+                    <div class="studio-options-panel">
+                        <h4 class="studio-sidebar-title">أداة معالجة المنتجات الرقمية</h4>
+                        <p class="studio-sidebar-desc">مستوحى من نظام محاكاة أديداس للعروض ثلاثية الأبعاد. يمكنك رفع صورة للمنتج (حذاء أو سترة أو كرة)، وضبط زوايا التمدد، وسنقوم بتوليد بطاقة عرض ثلاثية الأبعاد ديناميكية مذهلة لمتجرك.</p>
+                        
+                        <div class="studio-control-group">
+                            <label for="selectStudioProduct">اختر منتج من المتجر لتطبيقه:</label>
+                            <select id="selectStudioProduct" class="form-select">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="studio-control-group">
+                            <label>نوع التجسيم المطلوب:</label>
+                            <div class="segmented-control">
+                                <button class="segment-btn active" data-type="shoe">أحذية رياضة</button>
+                                <button class="segment-btn" data-type="clothing">ملابس رياضية</button>
+                                <button class="segment-btn" data-type="ball">معدات/كُرات</button>
+                            </div>
+                        </div>
+
+                        <div class="studio-control-group">
+                            <label for="studioRangeDepth">عمق التأثير ثلاثي الأبعاد (3D Depth):</label>
+                            <input type="range" id="studioRangeDepth" min="10" max="60" value="30">
+                            <div class="range-labels">
+                                <span>خفيف</span>
+                                <span id="depthValText">30px</span>
+                                <span>عميق جداً</span>
+                            </div>
+                        </div>
+
+                        <div class="studio-alert-success" id="studioSuccessAlert">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>اكتملت المعالجة ثلاثية الأبعاد!</strong>
+                                <span>تم دمج التأثير التفاعلي وبطاقة المنتج الآن مهيأة للدوران الفضائي مع حركة المشتري بنجاح.</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block btn-lg" id="btnRun3DScanner">
+                            <i class="fa-solid fa-microchip"></i>
+                            بدء المعالجة والتحويل لـ 3D
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Sidebar Navigation Drawer (Mobile Friendly) -->
+    <div class="sidebar-drawer-overlay" id="sidebarDrawerOverlay"></div>
+    <div class="sidebar-drawer" id="sidebarDrawer">
+        <div class="drawer-header">
+            <div class="drawer-brand">
+                <img src="assets/logo.png" alt="أبو تريكة ستور" class="drawer-logo-img">
+                <span class="drawer-title">أبو تريكة <span class="neon-text">STORE</span></span>
+            </div>
+            <button class="drawer-close-btn" id="closeDrawerBtn"><i class="fa-solid fa-times"></i></button>
+        </div>
+        
+        <div class="drawer-body">
+            <div class="drawer-menu-section">
+                <h4 class="menu-section-title">تصفح الأقسام الرئيسية</h4>
+                <a href="#" class="drawer-menu-item active" id="drawerHomeLink"><i class="fa-solid fa-house"></i> الرئيسية / المعرض</a>
+                <a href="#" class="drawer-menu-item" id="drawerContactLink"><i class="fa-brands fa-whatsapp"></i> تواصل مع الإدارة</a>
+            </div>
+            
+            <div class="drawer-menu-section admin-menu-section" id="drawerAdminSection" style="display: none;">
+                <h4 class="menu-section-title text-orange"><i class="fa-solid fa-screwdriver-wrench"></i> إدارة متجرك (المسؤول)</h4>
+                <a href="#" class="drawer-menu-item" id="drawerInventoryLink"><i class="fa-solid fa-warehouse"></i> إدارة المخزون والطلبات</a>
+                <a href="#" class="drawer-menu-item" id="drawerSettingsLink"><i class="fa-solid fa-gears"></i> إعدادات تواصل المتجر</a>
+                <a href="#" class="drawer-menu-item" id="drawerPasswordLink"><i class="fa-solid fa-key"></i> تغيير كلمة المرور</a>
+                <a href="#" class="drawer-menu-item" id="drawerLogoutLink" style="color: var(--neon-pink);"><i class="fa-solid fa-sign-out-alt"></i> تسجيل الخروج</a>
+            </div>
+        </div>
+        
+        <div class="drawer-footer">
+            <span>تحت إدارة: مصطفى متولي</span>
+            <span class="footer-version">الإصدار 1.0.5</span>
+        </div>
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div class="toast-notification" id="toastNotification">
+        <i id="toastIcon" class="fa-solid fa-circle-info"></i>
+        <span id="toastMsg">تم تنفيذ العملية بنجاح!</span>
+    </div>
+
+    <!-- Custom Frontend App Scripts -->
+    <script src="app.js?v=1.0.5"></script>
+</body>
+</html>
