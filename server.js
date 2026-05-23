@@ -544,5 +544,5 @@ app.listen(PORT, () => {
     console.log(`     2. Environment port (PORT) will be auto-bound.             `);
     console.log(`     3. Database & image uploads will persist automatically.    `);
     console.log(`================================================================`);
-    module.exports = app;
+    
 });
