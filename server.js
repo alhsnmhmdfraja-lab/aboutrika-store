@@ -18,13 +18,37 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Fallback: If they uploaded index.html, app.js, styles.css to the root folder, serve them safely
+app.get('/app.js', (req, res, next) => {
+    const p = path.join(__dirname, 'app.js');
+    if (fs.existsSync(p)) res.sendFile(p);
+    else {
+        const pubP = path.join(__dirname, 'public', 'app.js');
+        if (fs.existsSync(pubP)) res.sendFile(pubP);
+        else next();
+    }
+});
+
+app.get('/styles.css', (req, res, next) => {
+    const p = path.join(__dirname, 'styles.css');
+    if (fs.existsSync(p)) res.sendFile(p);
+    else {
+        const pubP = path.join(__dirname, 'public', 'styles.css');
+        if (fs.existsSync(pubP)) res.sendFile(pubP);
+        else next();
+    }
+});
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')));
+
 // Ensure upload directory exists
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)){
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Ensure assets directory exists in public
+// Ensure assets directory exists in public or root
 const assetsDir = path.join(__dirname, 'public', 'assets');
 if (!fs.existsSync(assetsDir)){
     fs.mkdirSync(assetsDir, { recursive: true });
@@ -478,7 +502,32 @@ app.put('/api/settings', (req, res) => {
 
 // Handle Fallback Routing (Serve index.html for SPA)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const indexPath = path.join(__dirname, 'public', 'index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        const rootIndexPath = path.join(__dirname, 'index.html');
+        if (fs.existsSync(rootIndexPath)) {
+            res.sendFile(rootIndexPath);
+        } else {
+            res.status(404).send(`
+                <div style="font-family: sans-serif; text-align: center; padding: 50px; background: #0f111a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <h1 style="color: #ff1e27; margin-bottom: 20px;">⚠️ عذراً، لم يتم العثور على ملفات واجهة المتجر!</h1>
+                    <p style="font-size: 18px; color: #a0aec0; max-width: 600px; line-height: 1.6;">
+                        يبدو أن السيرفر يعمل بنجاح، ولكن مجلد الواجهة الأمامية <strong>(public)</strong> أو ملف <strong>(index.html)</strong> غير موجود في مجلد السيرفر على GitHub.
+                    </p>
+                    <div style="background: #1a202c; padding: 25px; border-radius: 12px; text-align: right; margin-top: 30px; border: 1px solid #ff1e27; max-width: 550px; box-shadow: 0 10px 25px rgba(255, 30, 39, 0.15);">
+                        <strong style="color: #ff1e27; font-size: 18px; display: block; margin-bottom: 12px;">🔍 ما الذي يجب عليك فعله الآن ليعمل الموقع؟</strong>
+                        <ul style="margin: 0; padding: 0 20px 0 0; color: #cbd5e0; line-height: 1.8;">
+                            <li style="margin-bottom: 10px;">تأكد من وجود مجلد باسم <strong style="color: #fff;">public</strong> في مستودع GitHub الخاص بك.</li>
+                            <li style="margin-bottom: 10px;">تأكد من أن مجلد <strong style="color: #fff;">public</strong> يحتوي بداخلة على الملفات التالية: <strong style="color: #ff1e27;">index.html</strong> و <strong style="color: #ff1e27;">app.js</strong> و <strong style="color: #ff1e27;">styles.css</strong> ومجلد <strong style="color: #ff1e27;">assets</strong>.</li>
+                            <li style="margin-bottom: 10px;">إذا قمت برفع الملفات مباشرة في الجذر بدون مجلد public، يرجى إعادة تنظيمها ووضعها داخل مجلد باسم <strong style="color: #fff;">public</strong> كما هي في جهازك بالقرص D.</li>
+                        </ul>
+                    </div>
+                </div>
+            `);
+        }
+    }
 });
 
 // Start Server
@@ -495,4 +544,5 @@ app.listen(PORT, () => {
     console.log(`     2. Environment port (PORT) will be auto-bound.             `);
     console.log(`     3. Database & image uploads will persist automatically.    `);
     console.log(`================================================================`);
+    module.exports = app;
 });
